@@ -6,7 +6,6 @@
         'src/main.cpp',
       ],
       "include_dirs": [
-        "<!(node -e \"require('nan')\")",
         "src"
       ],
       'conditions': [
