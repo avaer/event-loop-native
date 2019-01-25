@@ -51,11 +51,11 @@ napi_value doDlclose(napi_env env, napi_callback_info args) {
     while (dlclose(handle) == 0) {}
 
     napi_value result;
-    napi_status napi_get_boolean(napi_env env, true, &result);
+    napi_get_boolean(env, true, &result);
     return result;
   } else {
     napi_value result;
-    napi_status napi_get_boolean(napi_env env, false, &result);
+    napi_get_boolean(env, false, &result);
     return result;
   }
 #else
