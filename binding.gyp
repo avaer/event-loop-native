@@ -1,7 +1,7 @@
 {
   'targets': [
     {
-      'target_name': 'event_loop_native',
+      'target_name': 'event_loop_native_napi',
       'sources': [
         'src/main.cpp',
       ],

@@ -105,8 +105,8 @@ napi_value Init(napi_env env, napi_value exports) {
 NAPI_MODULE(NODE_GYP_MODULE_NAME, eventLoopNative::Init)
 #else
 extern "C" {
-  void node_register_napi_module_worker_native(Local<Object> exports, Local<Value> module, Local<Context> context) {
-    eventLoopNative::Init(exports);
+  napi_value node_register_module_event_loop_native_napi(napi_env env, napi_value exports) {
+    return eventLoopNative::Init(env, exports);
   }
 }
 #endif
