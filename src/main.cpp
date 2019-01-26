@@ -24,12 +24,12 @@ napi_value getEventLoopAddress(napi_env env, napi_callback_info args) {
   napi_create_array_with_length(env, 2, &result);
   {
     napi_value n;
-    napi_create_int32(env, 0xFFFFFFFF & ((uintptr_t)loop >> 32), &n);
+    napi_create_uint32(env, 0xFFFFFFFF & ((uintptr_t)loop >> 32), &n);
     napi_set_element(env, result, 0, n);
   }
   {
     napi_value n;
-    napi_create_int32(env, 0xFFFFFFFF & (uintptr_t)loop, &n);
+    napi_create_uint32(env, 0xFFFFFFFF & (uintptr_t)loop, &n);
     napi_set_element(env, result, 1, n);
   }
 
