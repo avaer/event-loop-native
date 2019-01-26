@@ -8,12 +8,15 @@
 #include <Windows.h>
 #endif
 
-// using namespace v8;
-// using namespace node;
+#include <mutex>
 
 namespace eventLoopNative {
 
+std::mutex mut;
+
 napi_value getEventLoopAddress(napi_env env, napi_callback_info args) {
+  mut.lock();
+
   uv_loop_t *loop;
   napi_get_uv_event_loop(env, &loop);
 
@@ -46,39 +49,22 @@ napi_value doDlclose(napi_env env, napi_callback_info args) {
 
 #ifndef _WIN32
   void *handle = dlopen(soPath, RTLD_LAZY);
-
   if (handle) {
     while (dlclose(handle) == 0) {}
-
-    napi_value result;
-    napi_get_boolean(env, true, &result);
-    return result;
-  } else {
-    napi_value result;
-    napi_get_boolean(env, false, &result);
-    return result;
   }
 #else
   WCHAR soPath_w[32768];
   MultiByteToWideChar(CP_UTF8, 0, soPath, -1, soPath_w, sizeof(soPath_w)/sizeof(soPath_w[0]));
 
   HMODULE handle = LoadLibraryExW(soPath_w, NULL, LOAD_WITH_ALTERED_SEARCH_PATH);
-  if (handle != NULL) {
+  if (handle) {
     while (FreeLibrary(handle)) {}
-
-    napi_value result;
-    napi_get_boolean(env, true, &result);
-    return result;
-  } else {
-    napi_value result;
-    napi_get_boolean(env, true, &result);
-    return result;
   }
 #endif
 
-  napi_value undefined;
-  napi_get_undefined( env, &undefined);
-  return undefined;
+  napi_value result;
+  napi_get_boolean(env, (bool)handle, &result);
+  return result;
 }
 
 napi_value Init(napi_env env, napi_value exports) {
