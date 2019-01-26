@@ -66,6 +66,8 @@ napi_value doDlclose(napi_env env, napi_callback_info args) {
   void *handle = nullptr;
 #endif
 
+  mut.unlock();
+
   napi_value result;
   napi_get_boolean(env, (bool)handle, &result);
   return result;
