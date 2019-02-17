@@ -38,8 +38,8 @@ napi_value getEventLoopAddress(napi_env env, napi_callback_info args) {
 
 napi_value doDlclose(napi_env env, napi_callback_info args) {
 #ifndef LUMIN
-  size_t argc = 0;
   napi_value argv[1];
+  size_t argc = sizeof(argv)/sizeof(argv[0]);
   napi_value thisArg;
   void *data;
   napi_get_cb_info(env, args, &argc, argv, &thisArg, &data);
@@ -83,7 +83,7 @@ napi_value Init(napi_env env, napi_value exports) {
   napi_set_named_property(env, exports, "getEventLoopAddress", getEventLoopAddressFn);
   
   napi_value dlcloseFn;
-  napi_create_function(env, NULL, 0, doDlclose, NULL, &dlcloseFn);
+  napi_create_function(env, "dlclose", NAPI_AUTO_LENGTH, doDlclose, NULL, &dlcloseFn);
   napi_set_named_property(env, exports, "dlclose", dlcloseFn);
   
   // std::cout << "do init " << loop << std::endl;
