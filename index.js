@@ -1,8 +1,8 @@
 const path = require('path');
 
-const p = path.join(__dirname, 'build', 'Release', 'event_loop_native_napi.node');
-const {getEventLoopAddress, dlclose} = require(p);
+const dlibPath = path.join(__dirname, 'build', 'Release', 'event_loop_native_napi.node');
+const {getEventLoopAddress} = require(dlibPath);
 const eventLoopAddress = getEventLoopAddress();
-dlclose(p);
+eventLoopAddress.getDlibPath = () => dlibPath;
 
 module.exports = eventLoopAddress;
