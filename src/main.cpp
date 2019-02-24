@@ -8,15 +8,9 @@
 #include <Windows.h>
 #endif
 
-#include <mutex>
-
 namespace eventLoopNative {
 
-std::mutex mut;
-
 napi_value getEventLoopAddress(napi_env env, napi_callback_info args) {
-  mut.lock();
-
   uv_loop_t *loop;
   napi_get_uv_event_loop(env, &loop);
 
