@@ -93,7 +93,7 @@ napi_value Init(napi_env env, napi_value exports) {
 
 }
 
-#ifndef LUMIN
+#if !defined(ANDROID) && !defined(LUMIN)
 NAPI_MODULE(NODE_GYP_MODULE_NAME, eventLoopNative::Init)
 #else
 extern "C" {
