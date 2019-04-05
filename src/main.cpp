@@ -37,7 +37,7 @@ napi_value getEventLoopAddress(napi_env env, napi_callback_info args) {
 }
 
 napi_value doDlclose(napi_env env, napi_callback_info args) {
-#ifndef LUMIN
+#if !defined(ANDROID) && !defined(LUMIN)
   size_t argc = 0;
   napi_value argv[1];
   napi_value thisArg;
